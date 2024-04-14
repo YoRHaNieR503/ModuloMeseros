@@ -7,13 +7,14 @@
 <br />
 <form>
 
-    <table class="table table-striped">
+    <table class="table table-striped table-dark">
 
         <thead>
 
             <tr>
                 <th>Numero de Mesa</th>
                 <th>Estado</th>
+                <th>Reservar</th>
             </tr>
 
         </thead>
@@ -25,6 +26,7 @@
                 <tr>
                     <td>Mesa # @mesas.Numero_Mesa</td>
                     <td>@mesas.Estado</td>
+                    <td><button class="btn btn-primary btn-secondary" asp-area="" asp-controller="Home" asp-action="Index">Reservar</button></td>
                 </tr>
             }
 
