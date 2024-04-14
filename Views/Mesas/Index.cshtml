@@ -13,8 +13,7 @@
 
             <tr>
                 <th>Numero de Mesa</th>
-                <th>Descripción</th>
-                <th>Marca</th>
+                <th>Estado</th>
             </tr>
 
         </thead>
@@ -24,7 +23,7 @@
             @foreach (var mesas in (IEnumerable<dynamic>)ViewData["listadoMesa"])
             {
                 <tr>
-                    <td>@mesas.Numero_Mesa</td>
+                    <td>Mesa # @mesas.Numero_Mesa</td>
                     <td>@mesas.Estado</td>
                 </tr>
             }

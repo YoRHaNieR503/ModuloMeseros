@@ -8,8 +8,14 @@ namespace ModuloMeseros.Controllers
 
         private readonly DulceSavorDbContext _DulceSavorDbContext;
 
+        public MesasController(DulceSavorDbContext DulceSavorDbContexto)
+        {
+            _DulceSavorDbContext = DulceSavorDbContexto;
+        }
+
         public IActionResult Index()
         {
+            
 
             var listadoMesas = (from m in _DulceSavorDbContext.Mesas
                                 join em in _DulceSavorDbContext.EstadosMesas on m.Id_estado equals em.Id_estadoMesa
