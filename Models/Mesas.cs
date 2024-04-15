@@ -6,9 +6,10 @@ namespace ModuloMeseros.Models
     {
 
         [Key]
-        public int Id_mesa { get; set; }
-        public int? Id_estado { get; set; }
-        public int NumMesa { get; set; }
+        public int id_mesa { get; set; }
+        public int? cantidad_personas { get; set; }
+        public int? id_estado { get; set; }
+        public string? nombre_mesa {  get; set; }
 
     }
 }
