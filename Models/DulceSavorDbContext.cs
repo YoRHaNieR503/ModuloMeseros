@@ -18,6 +18,7 @@ namespace ModuloMeseros.Models
         public DbSet<items_promo> items_promo { get; set; }
         public DbSet<combos> combos { get; set; }
         public DbSet<categorias> categorias { get; set; }
+        public DbSet<items_combo> items_combo { get; set; }
 
     }
 }
