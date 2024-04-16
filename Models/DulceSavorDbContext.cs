@@ -19,6 +19,11 @@ namespace ModuloMeseros.Models
         public DbSet<combos> combos { get; set; }
         public DbSet<categorias> categorias { get; set; }
         public DbSet<items_combo> items_combo { get; set; }
+        public DbSet<items_menu> items_menu { get; set; }
+        public DbSet<detalle_fac> detalle_fac { get; set; }
+        public DbSet<Cuenta> Cuenta { get; set; }
+        public DbSet<encabezado_fac> encabezado_fac { get; set; }
 
+        
     }
 }
