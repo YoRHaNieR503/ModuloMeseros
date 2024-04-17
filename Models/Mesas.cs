@@ -2,7 +2,7 @@
 
 namespace ModuloMeseros.Models
 {
-    public class Mesas
+    public class mesas
     {
 
         [Key]

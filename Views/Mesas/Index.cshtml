@@ -34,8 +34,9 @@
         <thead>
 
             <tr>
-                <th class="text-center">Numero de Mesa</th>
+                <th class="text-center">Numero de Mesa</th>    
                 <th class="text-center">Estado</th>
+                <th class="text-center">Cantidad Personas</th>
                 <th class="text-center">Reservar Mesa</th>
             </tr>
 
@@ -46,8 +47,9 @@
             @foreach (var mesas in (IEnumerable<dynamic>)ViewData["listadoMesaTodas"])
             {
                 <tr>
-                    <td class="text-center">Mesa # @mesas.Numero_Mesa</td>
+                    <td class="text-center">@mesas.Numero_Mesa</td>
                     <td class="text-center">@mesas.Estado</td>
+                    <td class="text-center">@mesas.CantidasPersonas</td>
                     <td class="text-center">
                         @if (mesas.Estado == "libre")
                         {

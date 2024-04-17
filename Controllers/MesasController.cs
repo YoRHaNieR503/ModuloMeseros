@@ -16,39 +16,32 @@ namespace ModuloMeseros.Controllers
         public IActionResult Index()
         {
 
-            int cantidadMesasOcupadas = (from m in _DulceSavorDbContext.Mesas
-                                       join em in _DulceSavorDbContext.EstadosMesas on m.Id_estado equals em.Id_estadoMesa
-                                       where em.EstadoMesa == "ocupada"
+            int cantidadMesasOcupadas = (from m in _DulceSavorDbContext.mesas
+                                       join em in _DulceSavorDbContext.estados on m.id_estado equals em.id_estado
+                                       where em.tipo_estado == "mesas"
+                                       && em.nombre == "ocupada"
                                        select m
                                        ).Count();
 
             ViewData["ListaMesasOcupadas"] = cantidadMesasOcupadas;
 
-            int cantidadMesasLibres = (from m in _DulceSavorDbContext.Mesas
+            int cantidadMesas = (from m in _DulceSavorDbContext.mesas
                                        select m
                                        ).Count();
 
-            ViewData["ListaMesasCount"]=cantidadMesasLibres;
+            ViewData["ListaMesasCount"]=cantidadMesas;
 
-            var listadoMesas = (from m in _DulceSavorDbContext.Mesas
-                                join em in _DulceSavorDbContext.EstadosMesas on m.Id_estado equals em.Id_estadoMesa
-                                where em.EstadoMesa == "libre"
-                                select new
-                                {
-                                    Numero_Mesa = m.NumMesa,
-                                    Estado = em.EstadoMesa
- 
-                                }).ToList();
-            ViewData["listadoMesa"] = listadoMesas;
 
-            var listadoMesasTodas = (from m in _DulceSavorDbContext.Mesas
-                                join em in _DulceSavorDbContext.EstadosMesas on m.Id_estado equals em.Id_estadoMesa
-                                select new
-                                {
-                                    Numero_Mesa = m.NumMesa,
-                                    Estado = em.EstadoMesa
+            var listadoMesasTodas = (from m in _DulceSavorDbContext.mesas
+                                    join em in _DulceSavorDbContext.estados on m.id_estado equals em.id_estado
+                                     where em.tipo_estado == "mesas"
+                                     select new
+                                    {
+                                        Numero_Mesa = m.nombre_mesa,
+                                        CantidasPersonas = m.cantidad_personas,
+                                        Estado = em.nombre
 
-                                }).ToList();
+                                    }).ToList();
             ViewData["listadoMesaTodas"] = listadoMesasTodas;
 
 

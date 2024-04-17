@@ -12,7 +12,7 @@ namespace ModuloMeseros.Models
 
         public DbSet<comentario_pedidos> comentario_pedidos { get; set; }
         public DbSet<estados> estados { get; set; }
-        public DbSet<Mesas> Mesas { get; set; }
+        public DbSet<mesas> mesas { get; set; }
         public DbSet<Detalle_Pedido> Detalle_Pedido { get; set; }
         public DbSet<Promociones> Promociones { get; set; }
         public DbSet<items_promo> items_promo { get; set; }
