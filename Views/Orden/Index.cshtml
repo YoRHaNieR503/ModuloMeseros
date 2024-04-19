@@ -4,14 +4,16 @@
 @{
 }
 
+
 <div class="container text-center">
     <div class="row">
         <div class="col">
-            <h2 class="text-white">Mesa grande #: 1</h2>
+            <h2 class="text-white">@ViewData["NumeroMesa"]</h2>
+            <h2 class="text-white">Cantidad de personas max: @ViewData["CantidadPersonas"]</h2>
             <h2 class="text-white">Orden #: 1</h2>
         </div>
         <div class="col">
-            <h3 class="text-white">Estado:Solicitado</h3>
+            <h3 class="text-white">Estado: @Html.DropDownList("id_estado", ViewData["Estados"] as SelectList, new { @class = "form-control bg-dark text-white" })</h3>
         </div>
     </div>
 </div>
@@ -19,26 +21,40 @@
 <br />
 
 <form>
+     
     <table class="table table-borderless table-dark table-hover align-items-center" id="tablaOrdenes">
         <thead>
             <tr>
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">Pedido</th>
                 <th class="text-center">Precio</th>
+                <th class="text-center">Comentario</th>
                 <th class="text-center"></th>
                 <th class="text-center">Menu</th>
+                
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="vertical-align">
                 <td class="text-center">1.00</td>
                 <td class="text-center">Coca Cola</td>
                 <td class="text-center">$0.75</td>
                 <td class="text-center">
+
                     <div class="btn-group" role="group" aria-label="">
-                        <button class="btn btn-primary" onclick="" asp-area="" asp-controller="Home" asp-action="Comentario">Comentario</button>
-                        <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="Eliminar">Eliminar</button>
+
+                        <form id="commentForm">
+                            <div class="form-group">
+                                <textarea class="form-control" id="comment" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
+                            </div>
+                        </form>
+                        
                     </div>
+
+                    
+                </td>
+                <td>
+                    <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="Eliminar">Eliminar</button>
                 </td>
                 <td class="text-center">
                     <div class="btn-group-vertical" role="group" aria-label="Menu">
@@ -69,4 +85,6 @@
             <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="CancelarCuenta">CANCELAR CUENTA</button>
         </div>
     </div>
+
+
 </form>

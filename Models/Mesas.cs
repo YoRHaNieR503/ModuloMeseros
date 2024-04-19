@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace ModuloMeseros.Models
 {
@@ -10,6 +11,9 @@ namespace ModuloMeseros.Models
         public int? cantidad_personas { get; set; }
         public int? id_estado { get; set; }
         public string? nombre_mesa {  get; set; }
+
+
+
 
     }
 }

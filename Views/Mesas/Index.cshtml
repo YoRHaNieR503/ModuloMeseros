@@ -53,7 +53,9 @@
                     <td class="text-center">
                         @if (mesas.Estado == "libre")
                         {
-                            <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Index">Reservar</button>
+
+                            <a class="btn btn-secondary" asp-controller="Orden" asp-action="" asp-route-idMesa="@mesas.IDMesa">Reservar</a>
+
                         }
                         else
                         {

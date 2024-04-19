@@ -13,6 +13,7 @@ namespace ModuloMeseros.Controllers
             _DulceSavorDbContext = DulceSavorDbContexto;
         }
 
+
         public IActionResult Index()
         {
 
@@ -37,6 +38,7 @@ namespace ModuloMeseros.Controllers
                                      where em.tipo_estado == "mesas"
                                      select new
                                     {
+                                        IDMesa=m.id_mesa,
                                         Numero_Mesa = m.nombre_mesa,
                                         CantidasPersonas = m.cantidad_personas,
                                         Estado = em.nombre
