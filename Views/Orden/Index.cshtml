@@ -5,84 +5,124 @@
 }
 
 
-<div class="container text-center">
+<div class="container">
     <div class="row">
         <div class="col">
-            <h2 class="text-white">@ViewData["NumeroMesa"]</h2>
-            <h2 class="text-white">Cantidad de personas max: @ViewData["CantidadPersonas"]</h2>
-            <h2 class="text-white">Orden #: 1</h2>
+            <h4 class="text-white">@ViewData["NumeroMesa"]</h4>
+            <h4 class="text-white">Cantidad de personas max: @ViewData["CantidadPersonas"]</h4>
+            <h4 class="text-white">Orden #@ViewData["ListaCuentassCount"]</h4>
         </div>
-        <div class="col">
-            <h3 class="text-white">Estado: @Html.DropDownList("id_estado", ViewData["Estados"] as SelectList, new { @class = "form-control bg-dark text-white" })</h3>
+        <div class="col-md-2">
+            <h5 class="text-white">Estado orden:</h5>
+            <h5 class="text-white">@Html.DropDownList("id_estado", ViewData["Estados"] as SelectList, new { @class = "form-control bg-dark", @style = "color: yellow;" })</h5>
+
+
+
+            <form method="post" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label class="text-white" for="nombre">Nombre:</label>
+                    <input type="text" class="form-control bg-dark text-white" id="nombre" name="nombre" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa un nombre.
+                    </div>
+                </div>
+            </form>
+
+
+
         </div>
+
     </div>
 </div>
 
 <br />
 
 <form>
-     
-    <table class="table table-borderless table-dark table-hover align-items-center" id="tablaOrdenes">
-        <thead>
-            <tr>
-                <th class="text-center">Cantidad</th>
-                <th class="text-center">Pedido</th>
-                <th class="text-center">Precio</th>
-                <th class="text-center">Comentario</th>
-                <th class="text-center"></th>
-                <th class="text-center">Menu</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="vertical-align">
-                <td class="text-center">1.00</td>
-                <td class="text-center">Coca Cola</td>
-                <td class="text-center">$0.75</td>
-                <td class="text-center">
 
-                    <div class="btn-group" role="group" aria-label="">
+    <div class="container">
+        <div class="row">
 
-                        <form id="commentForm">
-                            <div class="form-group">
-                                <textarea class="form-control" id="comment" rows="3" placeholder="Escribe tu comentario aquí..."></textarea>
-                            </div>
-                        </form>
-                        
-                    </div>
+            <div class="col-lg-10">
 
-                    
-                </td>
-                <td>
-                    <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="Eliminar">Eliminar</button>
-                </td>
-                <td class="text-center">
-                    <div class="btn-group-vertical" role="group" aria-label="Menu">
-                        <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Bebidas">Bebidas</button>
-                        <br />
-                        <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Snacks">Snacks</button>
-                        <br />
-                        <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Comida">Comida</button>
-                        <br />
-                        <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Pasteles">Pasteles</button>
-                        <br />
-                        <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Combos">Combos</button>
-                        <br />
-                        <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Promociones">Promociones</button>
-                        <br />
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-        <th class="text-center">TOTAL: $0.75</th>
-    </table>
+
+                <table class="table table-borderless table-dark table-hover align-items-center" id="tablaOrdenes">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">Pedido</th>
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Comentario</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="vertical-align">
+                            <td class="text-center">1.00</td>
+                            <td class="text-center">Coca Cola</td>
+                            <td class="text-center">$0.75</td>
+                            <td class="text-center">
+
+                                <div class="btn-group" role="group" aria-label="">
+
+                                    <form id="commentForm">
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="comment" rows="3" placeholder="Escriba un comentario aqui..."></textarea>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="Eliminar">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <th class="text-center">TOTAL: $0.75</th>
+                </table>
+
+
+            </div>
+
+
+            <div class="col-md-2">
+
+
+                <div class="btn-group-vertical" role="group" aria-label="Menu">
+                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Bebidas">Bebidas</button>
+                    <br />
+                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Snacks">Snacks</button>
+                    <br />
+                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Comida">Comida</button>
+                    <br />
+                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Pasteles">Pasteles</button>
+                    <br />
+                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Combos">Combos</button>
+                    <br />
+                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Promociones">Promociones</button>
+                    <br />
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
     <div class="row">
         <div class="col text-left">
-            <button class="btn btn-success" onclick="" asp-area="" asp-controller="Home" asp-action="Ordenar">Ordenar</button>
+            <button type="submit" class="btn btn-success">Ordenar</button>
             <button class="btn btn-primary" onclick="" asp-area="" asp-controller="Home" asp-action="VerCuenta">Ver cuenta</button>
         </div>
         <div class="col text-right">
-            <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="CancelarCuenta">CANCELAR CUENTA</button>
+            <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Mesas" asp-action="">CANCELAR CUENTA</button>
         </div>
     </div>
 

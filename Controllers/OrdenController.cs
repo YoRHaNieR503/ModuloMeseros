@@ -18,6 +18,11 @@ namespace ModuloMeseros.Controllers
 
         public IActionResult Index(int idMesa)
         {
+            DateTime hoy = DateTime.Today;
+
+            int cantidadOrdenesHoy = _DulceSavorDbContext.Cuenta.Count(c => c.Fecha_Hora.Date == hoy) + 1;
+
+            ViewData["ListaCuentassCount"] = cantidadOrdenesHoy;
 
             var listaEstados = (from e in _DulceSavorDbContext.estados
                                 where e.tipo_estado == "Orden"
@@ -30,8 +35,7 @@ namespace ModuloMeseros.Controllers
 
             if (mesa == null)
             {
-                // Si la mesa no se encuentra en la base de datos, puedes manejar la situación de acuerdo a tus necesidades.
-                // Por ejemplo, podrías redirigir a una página de error o mostrar un mensaje al usuario.
+                // Si la mesa no se encuentra en la base de datos.
                 return NotFound(); // Devuelve una respuesta HTTP 404 - Not Found
             }
 
