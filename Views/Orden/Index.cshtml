@@ -1,9 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@{
+    int idMesa = (int)ViewData["IdMesa"];
+    DateTime fechaHoraActual = DateTime.Now;
 
+}
 
 <div class="container">
     <div class="row">
@@ -14,117 +13,132 @@
         </div>
         <div class="col-md-2">
             <h5 class="text-white">Estado orden:</h5>
-            <h5 class="text-white">@Html.DropDownList("id_estado", ViewData["Estados"] as SelectList, new { @class = "form-control bg-dark", @style = "color: yellow;" })</h5>
+            <h5 class="text-white">
+
+                @Html.DropDownList("estadoCuenta", ViewData["Estados"] as SelectList, "Seleccione un estado", new { @class = "form-control bg-dark", @style = "color: yellow;", @onchange = "cambiarValorInput()" })
+
+            </h5>
 
 
-
-            <form method="post" class="needs-validation" novalidate>
+            <!-- Formulario para crear cuenta -->
+            <form method="post" asp-action="CrearCuenta" asp-controller="Orden">
                 <div class="form-group">
+                    <input type="hidden" name="idMesa" value="@idMesa">
+                    <input type="hidden" name="fechaHora" value="@fechaHoraActual">
+                    <input type="hidden" name="estadoCuenta" id="estado">
                     <label class="text-white" for="nombre">Nombre:</label>
                     <input type="text" class="form-control bg-dark text-white" id="nombre" name="nombre" required>
+
                     <div class="invalid-feedback">
                         Por favor ingresa un nombre.
                     </div>
+                    <label class="text-white" for="cantPersonas">Cantidad de personas:</label>
+                    <input type="text" class="form-control bg-dark text-white" id="cantPersonas" name="cantPersonas" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa una cantidad de persona.
+                    </div>
                 </div>
             </form>
-
-
-
         </div>
-
     </div>
 </div>
 
-<br />
-
-<form>
-
-    <div class="container">
-        <div class="row">
-
-            <div class="col-lg-10">
-
-
-                <table class="table table-borderless table-dark table-hover align-items-center" id="tablaOrdenes">
-                    <thead>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10">
+            <!-- Tabla de órdenes -->
+            <table class="table table-borderless table-dark table-hover align-items-center" id="tablaOrdenes">
+                <thead>
+                    <tr>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Pedido</th>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Comentario</th>
+                        <th class="text-center">Tipo Plato</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detallePedido in (IEnumerable<dynamic>)ViewData["listadoDetallePedido"])
+                    {
                         <tr>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-center">Pedido</th>
-                            <th class="text-center">Precio</th>
-                            <th class="text-center">Comentario</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="vertical-align">
-                            <td class="text-center">1.00</td>
-                            <td class="text-center">Coca Cola</td>
-                            <td class="text-center">$0.75</td>
+                            <td class="text-center">@detallePedido.Cantidad</td>
+                            <td class="text-center">@detallePedido.Pedido</td>
+                            <td class="text-center">$@detallePedido.Precio</td>
                             <td class="text-center">
 
-                                <div class="btn-group" role="group" aria-label="">
-
-                                    <form id="commentForm">
+                                <form method="post" asp-action="CrearComentario" asp-controller="Orden">
+                                    <input type="hidden" name="idProducto" value="@detallePedido.idPlato">
+                                    <input type="hidden" name="idPedido" value="@detallePedido.iDCuenta">
                                         <div class="form-group">
-                                            <textarea class="form-control" id="comment" rows="3" placeholder="Escriba un comentario aqui..."></textarea>
+                                        <textarea class="form-control" name="Comentario" rows="3" placeholder="Escriba un comentario aqui..."></textarea>
                                         </div>
-                                    </form>
-
-                                </div>
+                                </form>
 
 
                             </td>
+                            <td class="text-center">@detallePedido.TipoPlato</td>
                             <td>
                                 <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Home" asp-action="Eliminar">Eliminar</button>
                             </td>
+
+
                         </tr>
-                    </tbody>
-                    <th class="text-center">TOTAL: $0.75</th>
-                </table>
-
-
+                    }
+                    
+                </tbody>
+                
+            </table>
+        </div>
+        <div class="col-md-2">
+            <br />
+            <br>
+            <!-- Botones de categorías de menú -->
+            <div class="btn-group-vertical" role="group" aria-label="Menu">
+                <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Bebidas">Bebidas</button>
+                <br />
+                <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Snacks">Snacks</button>
+                <br />
+                <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Comida">Comida</button>
+                <br />
+                <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Pasteles">Pasteles</button>
+                <br />
+                <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Combos">Combos</button>
+                <br />
+                <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Promociones">Promociones</button>
+                <br />
             </div>
-
-
-            <div class="col-md-2">
-
-
-                <div class="btn-group-vertical" role="group" aria-label="Menu">
-                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Bebidas">Bebidas</button>
-                    <br />
-                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Snacks">Snacks</button>
-                    <br />
-                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Comida">Comida</button>
-                    <br />
-                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Pasteles">Pasteles</button>
-                    <br />
-                    <button class="btn btn-secondary" asp-area="" asp-controller="Home" asp-action="Combos">Combos</button>
-                    <br />
-                    <button class="btn btn-secondary" onclick="" asp-area="" asp-controller="Home" asp-action="Promociones">Promociones</button>
-                    <br />
-                </div>
-
-
-            </div>
-
-
         </div>
     </div>
+</div>
 
-
-
-
-
-
+<div class="container">
     <div class="row">
+        <h3 class="text-left text-white">TOTAL: $@ViewData["TotalPrecio"]</h3>
         <div class="col text-left">
-            <button type="submit" class="btn btn-success">Ordenar</button>
-            <button class="btn btn-primary" onclick="" asp-area="" asp-controller="Home" asp-action="VerCuenta">Ver cuenta</button>
+            <!-- Botones de acción -->
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Crear cuenta</button>
+            <button class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="VerCuenta">Ver cuenta</button>
         </div>
         <div class="col text-right">
-            <button class="btn btn-danger" onclick="" asp-area="" asp-controller="Mesas" asp-action="">CANCELAR CUENTA</button>
+            <button class="btn btn-danger" asp-area="" asp-controller="Mesas" asp-action="">CANCELAR CUENTA</button>
         </div>
     </div>
+</div>
+
+<script>
+    function submitForm() {
+        // Envía el formulario
+        document.forms[0].submit();
+    }
 
 
-</form>
+    function cambiarValorInput() {
+        var dropdown = document.getElementById("estadoCuenta");
+        var input = document.getElementById("estado");
+        var nombreSeleccionado = dropdown.options[dropdown.selectedIndex].text;
+        input.value = nombreSeleccionado;
+    }
+
+
+</script>

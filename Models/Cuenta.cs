@@ -10,6 +10,6 @@ namespace ModuloMeseros.Models
         public string? Nombre { get; set; }
         public int? Cantidad_Personas {  get; set; }
         public string? Estado_cuenta { get; set; }
-        public DateTime Fecha_Hora { get; set; }
+        public DateTime? Fecha_Hora { get; set; }
     }
 }
