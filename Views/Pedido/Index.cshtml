@@ -2,6 +2,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
+    int idCuenta = ((List<int>)ViewData["idCuenta"])[0];
+
 }
 <style>
     .titulo-fuente {
@@ -11,8 +14,8 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h4 class="text-white">Número de Mesa: </h4>
-            <h4 class="text-white">Menú de: Snacks</h4>
+            <h4 class="text-white">Menú de: @ViewData["Categoria"]</h4>
+            <h4 class="text-white">Id Cuenta: @idCuenta</h4>
         </div>
         <div class="col-md-2">
             <h5 class="text-white titulo-fuente">Dulce Sabor</h5> 
@@ -22,27 +25,39 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
 
             <!-- Tabla de pedidos -->
             <table class="table table-bordered table-dark table-hover align-items-center" id="tablaPedidos">
                 <thead>
                     <tr>
                         <th class="text-center">Producto o Alimento</th>
+                        <th class="text-center">Estado</th>
                         <th class="text-center">Cantidad</th>
                         <th class="text-center"></th>
+                        <th class="text-center">Precio</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="text-center">Papitas</td>
-                        <td class="text-center"><span id="cantidad">0</span></td>
-                        <td class="text-center">
-                            <button class="btn btn-primary" onclick="incrementarCantidad()">+</button>
-                            <button class="btn btn-primary" onclick="decrementarCantidad()">-</button>
-                            <button class="btn btn-success" onclick="agregarProducto()">AGREGAR</button>
-                        </td>
-                    </tr>
+
+                    @foreach (var listaProductos in (IEnumerable<dynamic>)ViewData["listaProductos"])
+                    {
+                        <tr>
+
+                            <td class="text-center">@listaProductos.Producto</td>
+                            <td class="text-center">@listaProductos.Estado</td>
+                            <td class="text-center"><span id="cantidad">0</span></td>
+                            <td class="text-center">
+                                <button class="btn btn-primary" onclick="incrementarCantidad()">+</button>
+                                <button class="btn btn-primary" onclick="decrementarCantidad()">-</button>
+                                <button class="btn btn-success" onclick="agregarProducto('@listaProductos.Producto', '@listaProductos.Estado', cantidad, '@listaProductos.Precio')">AGREGAR</button>
+                            </td>
+                            <td class="text-center">@listaProductos.Precio</td>
+
+                        </tr>
+                    }
+
+
                 </tbody>
             </table>
         </div>
@@ -71,6 +86,52 @@
             document.getElementById("cantidad").innerText = cantidad;
         }
     }
+
+
+
+    function agregarProducto(producto, estado, cantidad, precio) {
+        var tablaOrdenes = document.getElementById("tablaOrdenes").getElementsByTagName('tbody')[0];
+        var fila = tablaOrdenes.insertRow();
+
+        var cantidadCell = fila.insertCell(0);
+        var pedidoCell = fila.insertCell(1);
+        var precioCell = fila.insertCell(2);
+        var comentarioCell = fila.insertCell(3);
+        var tipoPlatoCell = fila.insertCell(4);
+        var eliminarCell = fila.insertCell(5);
+
+        cantidadCell.textContent = cantidad;
+        pedidoCell.textContent = producto;
+        precioCell.textContent = precio;
+        comentarioCell.innerHTML = '<form method="post" asp-action="CrearComentario" asp-controller="Orden">' +
+            '<input type="hidden" name="idProducto" value="1">' + // Aquí deberías poner el id del producto
+            '<input type="hidden" name="idPedido" value="1">' + // Aquí deberías poner el id de la cuenta
+            '<div class="form-group">' +
+            '<textarea class="form-control" name="Comentario" rows="3" placeholder="Escriba un comentario aquí..."></textarea>' +
+            '</div>' +
+            '</form>';
+        tipoPlatoCell.textContent = "Tipo de plato"; // Debes asignar el tipo de plato correspondiente
+        eliminarCell.innerHTML = '<button class="btn btn-danger" onclick="eliminarProducto(this)">Eliminar</button>';
+    }
+
+    function eliminarProducto(boton) {
+        var fila = boton.parentNode.parentNode;
+        fila.parentNode.removeChild(fila);
+    }
+
+    function submitForm() {
+        // Envía el formulario
+        document.forms[0].submit();
+    }
+
+    function cambiarValorInput() {
+        var dropdown = document.getElementById("estadoCuenta");
+        var input = document.getElementById("estado");
+        var nombreSeleccionado = dropdown.options[dropdown.selectedIndex].text;
+        input.value = nombreSeleccionado;
+    }
+
+
 
 </script>
 

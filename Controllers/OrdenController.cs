@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ModuloMeseros.Models;
 using System.Runtime.Intrinsics.Arm;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ModuloMeseros.Controllers
 {
@@ -74,12 +75,7 @@ namespace ModuloMeseros.Controllers
                                join im in _DulceSavorDbContext.items_menu on dp.Id_plato equals im.id_item_menu
                                where cue.Id_mesa == idMesa
                                select dp.Precio).Sum();
-
             ViewData["TotalPrecio"] = totalPrecio;
-
-
-
-
 
 
 
@@ -95,7 +91,7 @@ namespace ModuloMeseros.Controllers
                 mesa.id_estado = nuevoIdEstado;
                 await _DulceSavorDbContext.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Mesas");
         }
 
 
@@ -122,7 +118,7 @@ namespace ModuloMeseros.Controllers
             _DulceSavorDbContext.comentario_pedidos.Add(nuevoComentario);
             await _DulceSavorDbContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Mesas");
         }
 
 
@@ -142,9 +138,8 @@ namespace ModuloMeseros.Controllers
             _DulceSavorDbContext.Detalle_Pedido.Add(nuevaOrden);
             await _DulceSavorDbContext.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Mesas");
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CrearCuenta(int idMesa, string nombre, int cantPersonas, string estadoCuenta, DateTime fechaHora)
@@ -164,12 +159,18 @@ namespace ModuloMeseros.Controllers
             // Llama al método para actualizar el estado de la mesa a "Ocupado" (ID = 1)
             await ActualizarEstadoMesa(idMesa, 1);
 
-            return RedirectToAction("Index", "Home");
+
+            // Vuelve a cargar la vista actual con los datos actualizados
+            return RedirectToAction("Index", new { idMesa });
         }
 
 
 
-
+        public IActionResult AbrirPedidoPorCategoria(int idMesa, int idCategoria)
+        {
+            // Redirecciona al controlador de pedido y pasa el ID de la categoría como parámetro
+            return RedirectToAction("Index", "Pedido", new { idCategoria = idCategoria, idMesa = idMesa });
+        }
 
     }
 }
