@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    .titulo-fuente {
+        font-family: 'Arial', sans-serif;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4 class="text-white">Número de Mesa: </h4>
+            <h4 class="text-white">Menú de: Snacks</h4>
+        </div>
+        <div class="col-md-2">
+            <h5 class="text-white titulo-fuente">Dulce Sabor</h5> 
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10">
+
+            <!-- Tabla de pedidos -->
+            <table class="table table-bordered table-dark table-hover align-items-center" id="tablaPedidos">
+                <thead>
+                    <tr>
+                        <th class="text-center">Producto o Alimento</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">Papitas</td>
+                        <td class="text-center"><span id="cantidad">0</span></td>
+                        <td class="text-center">
+                            <button class="btn btn-primary" onclick="incrementarCantidad()">+</button>
+                            <button class="btn btn-primary" onclick="decrementarCantidad()">-</button>
+                            <button class="btn btn-success" onclick="agregarProducto()">AGREGAR</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3 class="text-left text-white">TOTAL DE PRODUCTOS:</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    var cantidad = 0; 
+
+    function incrementarCantidad() {
+        cantidad++;
+        document.getElementById("cantidad").innerText = cantidad;
+    }
+
+    function decrementarCantidad() {
+        if (cantidad > 0) { 
+            cantidad--;
+            document.getElementById("cantidad").innerText = cantidad;
+        }
+    }
+
+</script>
+
+
+
