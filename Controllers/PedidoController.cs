@@ -26,7 +26,9 @@ namespace ModuloMeseros.Controllers
                                   {
                                       Producto = im.nombre,
                                       Estado = e.nombre,
-                                      Precio = im.precio
+                                      Precio = im.precio,
+                                      IdPlato = im.id_item_menu
+
                                   }).ToList();
             ViewData["listaProductos"] = listaProductos;
 
@@ -40,14 +42,16 @@ namespace ModuloMeseros.Controllers
 
             ViewData["Categoria"] = categoria.categoria;
 
-            var id_Mesa = _context.Cuenta.FirstOrDefault(m => m.Id_mesa == idMesa);
+            var mesa = _context.mesas.FirstOrDefault(m => m.id_mesa == idMesa);
 
-            if (id_Mesa == null)
+            if (mesa == null)
             {
+                // Si la mesa no se encuentra en la base de datos.
                 return NotFound(); // Devuelve una respuesta HTTP 404 - Not Found
             }
 
-            ViewData["idMesa"] = id_Mesa;
+            // Pasar los detalles de la mesa a la vista
+            ViewData["IdMesa"] = mesa.id_mesa;
 
             var id_cuenta = (from c in _context.Cuenta
                              where c.Id_mesa == idMesa
@@ -58,30 +62,27 @@ namespace ModuloMeseros.Controllers
             return View();
         }
 
-
-
         [HttpPost]
-        public async Task<IActionResult> CrearCuenta(int idMesa, string nombre, int cantPersonas, string estadoCuenta, DateTime fechaHora)
+        public async Task<IActionResult> AgregarPedido(int idMesa, int idCuenta, int idPlato, int cantidad, string Estad, decimal totalPedido)
         {
-            var nuevaCuenta = new Cuenta
+            var nuevoProducto = new Detalle_Pedido
             {
-                Id_mesa = idMesa,
-                Nombre = nombre,
-                Cantidad_Personas = cantPersonas,
-                Estado_cuenta = estadoCuenta,
-                Fecha_Hora = fechaHora
+                Id_cuenta = idCuenta,
+                Id_plato = idPlato,
+                Cantidad = cantidad,
+                Estado = Estad,
+                Tipo_Plato = 'P',
+                Precio = totalPedido
+                
+
             };
 
-            _DulceSavorDbContext.Cuenta.Add(nuevaCuenta);
-            await _DulceSavorDbContext.SaveChangesAsync();
+            _context.Detalle_Pedido.Add(nuevoProducto);
+            await _context.SaveChangesAsync();
 
-            // Llama al método para actualizar el estado de la mesa a "Ocupado" (ID = 1)
-            await ActualizarEstadoMesa(idMesa, 1);
-
-
-            // Vuelve a cargar la vista actual con los datos actualizados
-            return RedirectToAction("Index", new { idMesa });
+            return RedirectToAction("Index", "Detalles", new { idMesaCuenta = idMesa });
         }
+
 
 
 

@@ -31,6 +31,7 @@ namespace ModuloMeseros.Controllers
 
             var listaEstados = (from e in _DulceSavorDbContext.estados
                                 where e.tipo_estado == "Orden"
+                                && e.nombre == "Ordenando"
                                 select e).ToList();
 
             ViewData["Estados"] = new SelectList(listaEstados, "id_estado", "nombre");
@@ -159,10 +160,10 @@ namespace ModuloMeseros.Controllers
             // Llama al método para actualizar el estado de la mesa a "Ocupado" (ID = 1)
             await ActualizarEstadoMesa(idMesa, 1);
 
-
-            // Vuelve a cargar la vista actual con los datos actualizados
-            return RedirectToAction("Index", new { idMesa });
+            // Redirige a la acción "Index" del controlador "DetallesController" con el parámetro "idMesaCuenta"
+            return RedirectToAction("Index", "Detalles", new { idMesaCuenta = idMesa });
         }
+
 
 
 
