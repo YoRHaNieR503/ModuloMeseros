@@ -44,7 +44,8 @@
                         @foreach (var listaProductos in (IEnumerable<dynamic>)ViewData["listaProductos"])
                         {
                             <tr>
-                                <input type="hidden" name="idPlato" value="@listaProductos.IdPlato">
+                                    <input type="hidden" name="idPlato" value="@listaProductos.IdPlato">
+                                    <input type="hidden" name="idCuenta" value="@idCuenta">
                                 <td class="text-center">@listaProductos.Producto</td>
                                 <td class="text-center">@listaProductos.Estado</td>
                                 <input type="hidden" name="Estad" value="@listaProductos.Estado">
@@ -53,13 +54,14 @@
                                 </td>
                                 <td class="text-center precio">@listaProductos.Precio</td>
                                 <td class="text-center total">0.00</td>
+                                <td>
+                                    <input type="hidden" name="totalPedido" id="totalPedido">
+                                    <button type="submit" class="btn btn-success" name="idPlato" value="@listaProductos.IdPlato">Agregar Pedido</button>
+                                </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <!-- Agrega un campo oculto para el total -->
-                <input type="hidden" name="totalPedido" id="totalPedido">
-                <button type="submit" class="btn btn-success">Agregar Pedido</button>
             </form>
 
 

@@ -16,7 +16,7 @@
             <h5 class="text-white">Estado orden:</h5>
             <h5 class="text-white">
 
-                @Html.DropDownList("estadoCuenta", ViewData["Estados"] as SelectList, "Seleccione un estado", new { @id = "estadoDropDown", @class = "form-control bg-dark", @style = "color: yellow;", @onchange = "cambiarValorInput()" })
+                @Html.DropDownList("estadoCuenta", ViewData["Estados"] as SelectList, new { @id = "estadoDropDown", @class = "form-control bg-dark", @style = "color: yellow;", @onchange = "cambiarValorInput()" })
 
             </h5>
 

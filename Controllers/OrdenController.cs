@@ -31,7 +31,6 @@ namespace ModuloMeseros.Controllers
 
             var listaEstados = (from e in _DulceSavorDbContext.estados
                                 where e.tipo_estado == "Orden"
-                                && e.nombre == "Ordenando"
                                 select e).ToList();
 
             ViewData["Estados"] = new SelectList(listaEstados, "id_estado", "nombre");
